@@ -14,9 +14,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{814491A1-4F50-4736-8553-FF506FA99FA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EE79CD51-E2F4-4538-9B31-399461A228DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{BE5708CD-C0FE-49D5-B319-6401D563089E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{D9C17710-B0B8-4E9E-A89C-190C7BEA1C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beattle.Common", "Beattle.Common\Beattle.Common.csproj", "{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{814491A1-4F50-4736-8553-FF506FA99FA8} = {1B9CE72F-E062-425B-B79D-8E0B77FCF562}
+		{EE79CD51-E2F4-4538-9B31-399461A228DE} = {1B9CE72F-E062-425B-B79D-8E0B77FCF562}
+		{BE5708CD-C0FE-49D5-B319-6401D563089E} = {1B9CE72F-E062-425B-B79D-8E0B77FCF562}
+		{D9C17710-B0B8-4E9E-A89C-190C7BEA1C82} = {1B9CE72F-E062-425B-B79D-8E0B77FCF562}
+		{D5E2F4EE-A3D3-41AB-ABA5-1E88FC724C8D} = {814491A1-4F50-4736-8553-FF506FA99FA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D2BF433-4C15-406F-8D99-A3249F035DAA}
