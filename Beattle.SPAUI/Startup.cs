@@ -63,7 +63,16 @@ namespace Beattle.SPAUI
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    // As per the documentation https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/?view=aspnetcore-2.2, 
+                    // the project is configured to start the front end in the background when ASP.NET Core starts in development mode. 
+                    // This feature is designed with productivity in mind. However, when making frequent back end changes productivity 
+                    // can suffer as it takes up to 10 seconds to launch the application after a back end change.
+
+                    // For Production
+                    //spa.UseAngularCliServer(npmScript: "start");
+
+                    // For Development
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
