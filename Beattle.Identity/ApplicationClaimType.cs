@@ -9,11 +9,11 @@ namespace Beattle.Identity
         /// <summary>
         /// A claim that specifies the permission of an entity
         /// </summary>
-        public const string Permission = "permission";
+        public const string Authorization = "authorization";
 
         /// <summary>
-        /// A claim that specifies the settings of an entity
+        /// A claim that specifies the setting of an entity
         /// </summary>
-        public const string Setings = "settings";
+        public const string Setting = "setting";
     }
 }
