@@ -37,6 +37,34 @@ namespace Beattle.Persistence.PostgreSQL
             builder.Entity<ApplicationUser>().ToTable(RENAMED_TABLE_ASPNETUSERS);
             #endregion
 
+            #region Setting Relationship between Users, Roles and Claims
+            builder.Entity<ApplicationUser>()
+                .HasMany(user => user.Claims)
+                .WithOne()
+                .HasForeignKey(claim => claim.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationUser>()
+                .HasMany(user => user.Roles)
+                .WithOne()
+                .HasForeignKey(role => role.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationRole>()
+                .HasMany(role => role.Claims)
+                .WithOne()
+                .HasForeignKey(claim => claim.RoleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ApplicationRole>()
+                .HasMany(role => role.Users)
+                .WithOne()
+                .HasForeignKey(user => user.RoleId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
         }
     }
 }
