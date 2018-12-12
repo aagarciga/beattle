@@ -1,8 +1,11 @@
+using Beattle.Identity;
+using Beattle.Persistence.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +13,8 @@ namespace Beattle.SPAUI
 {
     public class Startup
     {
+        private const string DEFAULT_CONNECTION = "DefaultConnection";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +32,14 @@ namespace Beattle.SPAUI
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // Alex: Adding default connection string using postgresql connector
+            services.AddDbContext<ApplicationDbContext>(options => 
+                options.UseNpgsql(Configuration.GetConnectionString(DEFAULT_CONNECTION)));
+
+            // Alex: Set Identity Persistence through Entity Framework Core
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

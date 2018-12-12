@@ -10,3 +10,6 @@
 
 	dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 2.2.0
 
+	Add-Migration Initial
+
+

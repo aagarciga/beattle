@@ -39,3 +39,5 @@ By running the front end independently and launching the back end with dotnet wa
 ## Commands History
 
 	dotnet restore
+
+	dotnet add package AutoMapper --version 8.0.0
