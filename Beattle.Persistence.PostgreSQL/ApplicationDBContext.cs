@@ -16,7 +16,9 @@ namespace Beattle.Persistence.PostgreSQL
         private const string RENAMED_TABLE_ASPNETUSERLOGINS = "UserLogin";
         private const string RENAMED_TABLE_ASPNETUSERROLES = "UserRole";
         private const string RENAMED_TABLE_ASPNETUSERTOKENS = "UserToken";
-        private const string RENAMED_TABLE_ASPNETUSERS = "User"; 
+        private const string RENAMED_TABLE_ASPNETUSERS = "User";
+
+        public string CurrentUserId { get; set; }
 
         // Maybe i need to just use DbContextOptions options
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
