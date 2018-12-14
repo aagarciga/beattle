@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Beattle.Application.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
 namespace Beattle.Identity
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser, IApplicationUser
     {
+        public string Name { get; set; }
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationUser"/>
         /// </summary>
@@ -27,5 +29,6 @@ namespace Beattle.Identity
         /// Navigation property for the claims this user possesses
         /// </summary>
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+       
     }
 }
