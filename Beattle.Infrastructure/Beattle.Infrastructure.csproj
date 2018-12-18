@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="OpenIddict" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Beattle.Application\Beattle.Application.csproj" />
+    <ProjectReference Include="..\Beattle.Identity\Beattle.Identity.csproj" />
+    <ProjectReference Include="..\Beattle.Persistence.PostgreSQL\Beattle.Persistence.PostgreSQL.csproj" />
+  </ItemGroup>
+
 </Project>

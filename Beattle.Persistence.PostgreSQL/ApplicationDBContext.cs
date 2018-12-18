@@ -1,4 +1,5 @@
-﻿using Beattle.Identity;
+﻿using Beattle.Application.Interfaces;
+using Beattle.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Beattle.Persistence.PostgreSQL
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IApplicationDbContext
     {
         private const string RENAMED_TABLE_ASPNETROLECLAIMS = "RoleClaim";
         private const string RENAMED_TABLE_ASPNETROLES = "Role";
@@ -23,7 +24,7 @@ namespace Beattle.Persistence.PostgreSQL
         // Maybe i need to just use DbContextOptions options
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
             : base(options)
-        { }
+        {}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
