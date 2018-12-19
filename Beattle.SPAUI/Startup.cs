@@ -145,9 +145,9 @@ namespace Beattle.SPAUI
                     policy => policy.RequireClaim(
                         ApplicationClaimType.Authorization,
                         AuthorizationManager.ManageRoles));
-                options.AddPolicy(Policies.ViewRoleByRoleNamePolicy,
+                options.AddPolicy(Policies.ViewRoleByRoleName,
                     policy => policy.Requirements.Add(new ViewRoleAuthorizationRequirement()));
-                options.AddPolicy(Policies.AssignAllowedRolesPolicy,
+                options.AddPolicy(Policies.AssignAllowedRoles,
                     policy => policy.Requirements.Add(new AssignRolesAuthorizationRequirement()));
             });
             #endregion

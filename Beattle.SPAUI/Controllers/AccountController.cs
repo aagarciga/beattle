@@ -117,7 +117,7 @@ namespace Beattle.SPAUI.Controllers
             string[] currentRoles = applicationUser != null ? (await accountManager.GetUserRolesAsync(applicationUser)).ToArray() : null;
 
             Task<AuthorizationResult> manageUsersPolicy = authorizationService.AuthorizeAsync(User, id, AccountManagementOperations.Update);
-            Task<AuthorizationResult> assignRolePolicy = authorizationService.AuthorizeAsync(User, Tuple.Create(userEditViewModel.Roles, currentRoles), Policies.AssignAllowedRolesPolicy);
+            Task<AuthorizationResult> assignRolePolicy = authorizationService.AuthorizeAsync(User, Tuple.Create(userEditViewModel.Roles, currentRoles), Policies.AssignAllowedRoles);
             
             if ((await Task.WhenAll(manageUsersPolicy, assignRolePolicy)).Any(result => !result.Succeeded))
                 return new ChallengeResult();
