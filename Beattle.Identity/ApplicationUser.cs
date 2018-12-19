@@ -9,6 +9,7 @@ namespace Beattle.Identity
     {
         public string Name { get; set; }
         public string Configuration { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationUser"/>
