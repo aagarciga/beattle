@@ -6,6 +6,18 @@ namespace Beattle.Infrastructure.Security
 {
     public static class Security
     {
+        
+
+        public const bool PasswordRequiredDigit = true;
+        public const int PasswordRequiredLength = 6;
+        public const bool PasswordRequireNonAlphanumeric = true;
+        public const bool PasswordRequireUppercase = true;
+        public const bool PasswordRequireLowercase = true;
+        public const int PasswordRequiredUniqueChars = 1;
+
+        public static string PasswordRequiredLengthErrorMessage { get => string.Format("{0}", PasswordRequiredLength);}
+
+
         /// <summary>
         /// 
         /// </summary>

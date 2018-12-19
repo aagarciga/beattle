@@ -234,7 +234,12 @@ namespace Beattle.Infrastructure.Security
         {
             return await userManager.GetRolesAsync(user);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"> -1 for all pages</param>
+        /// <param name="pageSize"> -1 for all</param>
+        /// <returns></returns>
         public async Task<List<Tuple<IApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
             IQueryable<IApplicationUser> usersQuery = dbContext.Users

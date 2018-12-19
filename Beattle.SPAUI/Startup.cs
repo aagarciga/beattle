@@ -71,12 +71,12 @@ namespace Beattle.SPAUI
 
                 #region Identity Password settings
                 // Identity Password Options Defaults
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = Security.PasswordRequiredDigit;
+                options.Password.RequiredLength = Security.PasswordRequiredLength;
+                options.Password.RequireNonAlphanumeric = Security.PasswordRequireNonAlphanumeric;
+                options.Password.RequireUppercase = Security.PasswordRequireUppercase;
+                options.Password.RequireLowercase = Security.PasswordRequireLowercase;
+                options.Password.RequiredUniqueChars = Security.PasswordRequiredUniqueChars;
                 #endregion
 
                 #region Identity Lockout settings

@@ -5,7 +5,7 @@ namespace Beattle.Infrastructure.Security
     /// <summary>
     /// Operation Policy to allow adding, viewing, updating and deleting general or specific user records
     /// </summary>
-    class AccountManagementOperations
+    public class AccountManagementOperations
     {
         public const string CreateOperationName = "Create";
         public const string ReadOperationName = "Read";
