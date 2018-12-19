@@ -6,6 +6,7 @@ using Beattle.Infrastructure.Security;
 using Beattle.Infrastructure.Security.Handlers;
 using Beattle.Infrastructure.Security.Requirements;
 using Beattle.Persistence.PostgreSQL;
+using Beattle.SPAUI.ViewModels.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -172,7 +173,11 @@ namespace Beattle.SPAUI
             services.AddScoped<IAccountManager, AccountManager>();
             #endregion
 
-            //TODO: Configure Automapper and implement AutoMapperProfile
+            Mapper.Initialize(Configuration =>
+            {
+                Configuration.AddProfile<AutoMapperProfile>();
+            });
+
 
             #region Database Initialization (Seeding)
             // TODO: Implement DatabaseInitializer Class for Seeding
