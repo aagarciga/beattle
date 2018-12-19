@@ -8,7 +8,7 @@ namespace Beattle.Identity
     public class ApplicationUser : IdentityUser, IApplicationUser
     {
         public string Name { get; set; }
-        public string Configuration { get; set; }
+        public string Settings { get; set; }
         public bool IsEnabled { get; set; }
 
         /// <summary>

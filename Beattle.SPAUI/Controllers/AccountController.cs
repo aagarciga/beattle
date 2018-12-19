@@ -312,7 +312,7 @@ namespace Beattle.SPAUI.Controllers
             IApplicationUser applicationUser = await accountManager.GetUserByIdAsync(userId);
 
             if (applicationUser != null)
-                return Ok(applicationUser.Configuration);
+                return Ok(applicationUser.Settings);
             else
                 return NotFound(userId);
         }
@@ -328,7 +328,7 @@ namespace Beattle.SPAUI.Controllers
             if (applicationUser == null)
                 return NotFound(userId);
 
-            applicationUser.Configuration = data;
+            applicationUser.Settings = data;
             var result = await accountManager.UpdateUserAsync(applicationUser);
             if (!result.Item1)
                 throw new Exception("The following errors occurred whilst updating User Configurations: " + string.Join(", ", result.Item2));

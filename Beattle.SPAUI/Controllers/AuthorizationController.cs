@@ -194,8 +194,8 @@ namespace Beattle.SPAUI.Controllers
                 if (!string.IsNullOrWhiteSpace(applicationUser.Name))
                     identity.AddClaim(ApplicationClaimType.Name, applicationUser.Name, OpenIdConnectConstants.Destinations.IdentityToken);
 
-                if (!string.IsNullOrWhiteSpace(applicationUser.Configuration))
-                    identity.AddClaim(ApplicationClaimType.Setting, applicationUser.Configuration, OpenIdConnectConstants.Destinations.IdentityToken);
+                if (!string.IsNullOrWhiteSpace(applicationUser.Settings))
+                    identity.AddClaim(ApplicationClaimType.Setting, applicationUser.Settings, OpenIdConnectConstants.Destinations.IdentityToken);
             }
 
             if (ticket.HasScope(OpenIdConnectConstants.Scopes.Email))
