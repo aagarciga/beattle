@@ -177,10 +177,9 @@ namespace Beattle.SPAUI
                 Configuration.AddProfile<AutoMapperProfile>();
             });
 
-
             #region Database Initialization (Seeding)
             // TODO: Implement DatabaseInitializer Class for Seeding
-            //services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
             #endregion
         }
 
