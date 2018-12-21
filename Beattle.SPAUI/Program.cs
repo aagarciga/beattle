@@ -13,24 +13,60 @@ using Serilog;
 using Serilog.Events;
 using System.Net;
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Serilog.Events;
+using Serilog.Core;
+using Serilog;
+using Serilog.Sinks.Email;
+
 namespace Beattle.SPAUI
 {
     public class Program
     {
+
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+           .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+           .AddEnvironmentVariables()
+           .Build();
+
+
         public static void Main(string[] args)
         {
-            NetworkCredential networkCredential = new NetworkCredential("alex.alvarez@turmundo.com", "Dandelion*78");
+            var smtpSettings = Configuration.GetSection("SmtpConfig");
             Log.Logger = new LoggerConfiguration()
                .MinimumLevel.Debug()
                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                .Enrich.FromLogContext()
                .WriteTo.File("Logs" + Path.DirectorySeparatorChar + "log.txt", rollingInterval: RollingInterval.Day)
                .WriteTo.Email(
-                fromEmail: "alex.alvarez@turmundo.com",
-                toEmail: "aagarciga@gmail.com",
-                mailServer: "smtp.google.com",
-                mailSubject: "Beattle Logging",                
-                networkCredential: networkCredential)
+                new EmailConnectionInfo
+                {
+                    FromEmail = smtpSettings["EmailAddress"],
+                    ToEmail = "aagarciga@gmail.com",
+                    MailServer = smtpSettings["Host"],
+                    NetworkCredentials = new NetworkCredential
+                    {
+                        UserName = smtpSettings["Username"],
+                        Password = smtpSettings["Password"]
+                    },
+                    EnableSsl = true,
+                    Port = int.Parse(smtpSettings["Port"]),
+                    EmailSubject = "Beattle Logging"
+                },
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}",
+                batchPostingLimit: 10
+                , restrictedToMinimumLevel: LogEventLevel.Information
+                )
                .CreateLogger();
 
             try
