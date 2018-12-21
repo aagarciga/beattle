@@ -93,13 +93,13 @@ namespace Beattle.Infrastructure.Security
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
             }
 
-            user = await userManager.FindByNameAsync(user.Name);
+            user = await userManager.FindByNameAsync(user.UserName);
 
             try
             {
                 result = await userManager.AddToRolesAsync(user as ApplicationUser, roles.Distinct());
             }
-            catch
+            catch (Exception)
             {
                 await DeleteUserAsync(user);
                 throw;
