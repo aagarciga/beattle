@@ -25,12 +25,12 @@ namespace Beattle.SPAUI
     {
         private const string DEFAULT_CONNECTION = "DefaultConnection";
 
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        }        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -167,6 +167,7 @@ namespace Beattle.SPAUI
             #region Scoping Business Services
             // Alex: services.AddScoped<IService, Service>();
             #endregion
+
 
             #region Scoping Repositories
             services.AddScoped<IAccountManager, AccountManager>();
