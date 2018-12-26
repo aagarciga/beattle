@@ -39,3 +39,18 @@ By running the front end independently and launching the back end with dotnet wa
 ## Commands History
 
 	dotnet restore
+
+	dotnet add package AutoMapper --version 8.0.0
+
+	dotnet add package OpenIddict --version 2.0.0
+	Install-Package OpenIddict -Version 2.0.0
+
+	dotnet add package OpenIddict.EntityFrameworkCore --version 2.0.0
+	Install-Package OpenIddict.EntityFrameworkCore -Version 2.0.0
+
+	dotnet add package Serilog.AspNetCore 
+	Install-Package Serilog.AspNetCore -DependencyVersion Highest
+	dotnet add package Serilog.Sinks.File
+	Install-Package Serilog.Sinks.File
+	dotnet add package Serilog.Sinks.Email
+	Install-Package Serilog.Sinks.Email
