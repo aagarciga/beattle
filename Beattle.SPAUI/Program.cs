@@ -68,10 +68,12 @@ namespace Beattle.SPAUI
                     IServiceProvider services = scope.ServiceProvider;
                     try
                     {
-                        IDatabaseInitializer databaseInitializer =
+						Log.Information("Generating inbuilt accounts");
+						IDatabaseInitializer databaseInitializer =
                             services.GetRequiredService<IDatabaseInitializer>();
                         databaseInitializer.SeedAsync(AuthorizationManager.GetAllAuthorizationValues()).Wait();
-                    }
+						Log.Information("Inbuilt account generation completed");
+					}
                     catch (Exception e)
                     {
                         Log.Fatal(e, "Error whilst creating and seeding database");

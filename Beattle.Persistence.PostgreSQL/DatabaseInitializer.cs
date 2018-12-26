@@ -25,8 +25,6 @@ namespace Beattle.Persistence.PostgreSQL
 
             if (!await applicationDbContext.Users.AnyAsync())
             {
-                // TODO: Log : "Generating inbuilt accounts"
-
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
 
@@ -35,8 +33,6 @@ namespace Beattle.Persistence.PostgreSQL
 
                 await CreateUserAsync("administrator", "Administrator*78", "Inbuilt Administrator", "administrator@beattle.com", "+1 (123) 000-0000", new string[] { adminRoleName });
                 await CreateUserAsync("user", "User*78", "Inbuilt Standard User", "user@beattle.com", "+1 (123) 000-0001", new string[] { userRoleName });
-
-                // TODO: Log : "Inbuilt account generation completed"
             }
 
         }
