@@ -6,10 +6,10 @@ using Beattle.Infrastructure.Security;
 using Beattle.Infrastructure.Security.Handlers;
 using Beattle.Infrastructure.Security.Requirements;
 using Beattle.Persistence.PostgreSQL;
+using Beattle.SPAUI.ViewModels.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -25,12 +25,12 @@ namespace Beattle.SPAUI
     {
         private const string DEFAULT_CONNECTION = "DefaultConnection";
 
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        }        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -71,12 +71,12 @@ namespace Beattle.SPAUI
 
                 #region Identity Password settings
                 // Identity Password Options Defaults
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = Security.PasswordRequiredDigit;
+                options.Password.RequiredLength = Security.PasswordRequiredLength;
+                options.Password.RequireNonAlphanumeric = Security.PasswordRequireNonAlphanumeric;
+                options.Password.RequireUppercase = Security.PasswordRequireUppercase;
+                options.Password.RequireLowercase = Security.PasswordRequireLowercase;
+                options.Password.RequiredUniqueChars = Security.PasswordRequiredUniqueChars;
                 #endregion
 
                 #region Identity Lockout settings
@@ -145,9 +145,9 @@ namespace Beattle.SPAUI
                     policy => policy.RequireClaim(
                         ApplicationClaimType.Authorization,
                         AuthorizationManager.ManageRoles));
-                options.AddPolicy(Policies.ViewRoleByRoleNamePolicy,
+                options.AddPolicy(Policies.ViewRoleByRoleName,
                     policy => policy.Requirements.Add(new ViewRoleAuthorizationRequirement()));
-                options.AddPolicy(Policies.AssignAllowedRolesPolicy,
+                options.AddPolicy(Policies.AssignAllowedRoles,
                     policy => policy.Requirements.Add(new AssignRolesAuthorizationRequirement()));
             });
             #endregion
@@ -168,15 +168,19 @@ namespace Beattle.SPAUI
             // Alex: services.AddScoped<IService, Service>();
             #endregion
 
+
             #region Scoping Repositories
             services.AddScoped<IAccountManager, AccountManager>();
             #endregion
 
-            //TODO: Configure Automapper and implement AutoMapperProfile
+            Mapper.Initialize(Configuration =>
+            {
+                Configuration.AddProfile<AutoMapperProfile>();
+            });
 
             #region Database Initialization (Seeding)
             // TODO: Implement DatabaseInitializer Class for Seeding
-            //services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
             #endregion
         }
 
@@ -194,9 +198,15 @@ namespace Beattle.SPAUI
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -220,10 +230,11 @@ namespace Beattle.SPAUI
                     // can suffer as it takes up to 10 seconds to launch the application after a back end change.
 
                     // For Production
-                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.Options.StartupTimeout = TimeSpan.FromMinutes(1);
 
                     // For Development
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

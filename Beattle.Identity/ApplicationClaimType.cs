@@ -15,5 +15,9 @@ namespace Beattle.Identity
         /// A claim that specifies the setting of an entity
         /// </summary>
         public const string Setting = "setting";
+
+        public const string Name = "fullname";
+        public const string Email = "email";
+        public const string PhoneNumber = "phonenumber";
     }
 }

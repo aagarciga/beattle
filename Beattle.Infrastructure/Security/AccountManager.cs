@@ -17,13 +17,13 @@ namespace Beattle.Infrastructure.Security
     public class AccountManager : IAccountManager
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserManager<IApplicationUser> userManager;
-        private readonly RoleManager<IApplicationRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public AccountManager(
             ApplicationDbContext dbContext,
-            UserManager<IApplicationUser> userManager,
-            RoleManager<IApplicationRole> roleManager,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
             IHttpContextAccessor httpContextAccessor)
         {
             
@@ -36,7 +36,7 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<bool> CheckPasswordAsync(IApplicationUser user, string password)
         {
-            if (!await userManager.CheckPasswordAsync(user, password))
+            if (!await userManager.CheckPasswordAsync(user as ApplicationUser, password))
             {
 
                 if (! userManager.SupportsUserLockout)
@@ -45,7 +45,7 @@ namespace Beattle.Infrastructure.Security
                     //  If the failed access account is greater than or equal to the configured maximum
                     //  number of attempts, the user will be locked out for the configured lockout time
                     //  span.
-                    await userManager.AccessFailedAsync(user);
+                    await userManager.AccessFailedAsync(user as ApplicationUser);
                 }
                 return false;
             }
@@ -64,7 +64,7 @@ namespace Beattle.Infrastructure.Security
                 return Tuple.Create(false, new[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
 
 
-            var result = await roleManager.CreateAsync(role);
+            var result = await roleManager.CreateAsync(role as ApplicationRole);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(error => error.Description).ToArray());
 
@@ -73,7 +73,7 @@ namespace Beattle.Infrastructure.Security
 
             foreach (string claim in claims.Distinct())
             {
-                result = await roleManager.AddClaimAsync(role, new Claim(ApplicationClaimType.Authorization, AuthorizationManager.GetByValue(claim)));
+                result = await roleManager.AddClaimAsync(role as ApplicationRole, new Claim(ApplicationClaimType.Authorization, AuthorizationManager.GetByValue(claim)));
 
                 if (!result.Succeeded)
                 {
@@ -87,19 +87,19 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> CreateUserAsync(IApplicationUser user, IEnumerable<string> roles, string password)
         {
-            var result = await userManager.CreateAsync(user, password);
+            var result = await userManager.CreateAsync(user as ApplicationUser, password);
             if (!result.Succeeded)
             {
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
             }
 
-            user = await userManager.FindByNameAsync(user.Name);
+            user = await userManager.FindByNameAsync(user.UserName);
 
             try
             {
-                result = await userManager.AddToRolesAsync(user, roles.Distinct());
+                result = await userManager.AddToRolesAsync(user as ApplicationUser, roles.Distinct());
             }
-            catch
+            catch (Exception)
             {
                 await DeleteUserAsync(user);
                 throw;
@@ -116,7 +116,7 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> DeleteRoleAsync(IApplicationRole role)
         {
-            var result = await roleManager.DeleteAsync(role);
+            var result = await roleManager.DeleteAsync(role as ApplicationRole);
             return Tuple.Create(result.Succeeded, result.Errors.Select(error => error.Description).ToArray());
         }
 
@@ -134,7 +134,7 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> DeleteUserAsync(IApplicationUser user)
         {
-            var result = await userManager.DeleteAsync(user);
+            var result = await userManager.DeleteAsync(user as ApplicationUser);
             return Tuple.Create(result.Succeeded, result.Errors.Select(error => error.Description).ToArray());
         }
 
@@ -232,9 +232,14 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<IList<string>> GetUserRolesAsync(IApplicationUser user)
         {
-            return await userManager.GetRolesAsync(user);
+            return await userManager.GetRolesAsync(user as ApplicationUser);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"> -1 for all pages</param>
+        /// <param name="pageSize"> -1 for all</param>
+        /// <returns></returns>
         public async Task<List<Tuple<IApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
             IQueryable<IApplicationUser> usersQuery = dbContext.Users
@@ -262,9 +267,9 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> ResetPasswordAsync(IApplicationUser user, string newPassword)
         {
-            string resetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+            string resetToken = await userManager.GeneratePasswordResetTokenAsync(user as ApplicationUser);
 
-            var result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
+            var result = await userManager.ResetPasswordAsync(user as ApplicationUser, resetToken, newPassword);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -289,7 +294,7 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(IApplicationUser user, string currentPassword, string newPassword)
         {
-            var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            var result = await userManager.ChangePasswordAsync(user as ApplicationUser, currentPassword, newPassword);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -305,14 +310,14 @@ namespace Beattle.Infrastructure.Security
                     return Tuple.Create(false, new[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
             }
 
-            var result = await roleManager.UpdateAsync(role);
+            var result = await roleManager.UpdateAsync(role as ApplicationRole);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
 
             if (claims != null)
             {
-                var roleClaims = (await roleManager.GetClaimsAsync(role)).Where(c => c.Type == ApplicationClaimType.Authorization);
+                var roleClaims = (await roleManager.GetClaimsAsync(role as ApplicationRole)).Where(c => c.Type == ApplicationClaimType.Authorization);
                 var roleClaimValues = roleClaims.Select(c => c.Value).ToArray();
 
                 var claimsToRemove = roleClaimValues.Except(claims).ToArray();
@@ -322,7 +327,7 @@ namespace Beattle.Infrastructure.Security
                 {
                     foreach (string claim in claimsToRemove)
                     {
-                        result = await roleManager.RemoveClaimAsync(role, roleClaims.Where(c => c.Value == claim).FirstOrDefault());
+                        result = await roleManager.RemoveClaimAsync(role as ApplicationRole, roleClaims.Where(c => c.Value == claim).FirstOrDefault());
                         if (!result.Succeeded)
                             return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                     }
@@ -332,7 +337,7 @@ namespace Beattle.Infrastructure.Security
                 {
                     foreach (string claim in claimsToAdd)
                     {
-                        result = await roleManager.AddClaimAsync(role, new Claim(ApplicationClaimType.Authorization, AuthorizationManager.GetByValue(claim)));
+                        result = await roleManager.AddClaimAsync(role as ApplicationRole, new Claim(ApplicationClaimType.Authorization, AuthorizationManager.GetByValue(claim)));
                         if (!result.Succeeded)
                             return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                     }
@@ -349,28 +354,28 @@ namespace Beattle.Infrastructure.Security
 
         public async Task<Tuple<bool, string[]>> UpdateUserAsync(IApplicationUser user, IEnumerable<string> roles)
         {
-            var result = await userManager.UpdateAsync(user);
+            var result = await userManager.UpdateAsync(user as ApplicationUser);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
 
             if (roles != null)
             {
-                var userRoles = await userManager.GetRolesAsync(user);
+                var userRoles = await userManager.GetRolesAsync(user as ApplicationUser);
 
                 var rolesToRemove = userRoles.Except(roles).ToArray();
                 var rolesToAdd = roles.Except(userRoles).Distinct().ToArray();
 
                 if (rolesToRemove.Any())
                 {
-                    result = await userManager.RemoveFromRolesAsync(user, rolesToRemove);
+                    result = await userManager.RemoveFromRolesAsync(user as ApplicationUser, rolesToRemove);
                     if (!result.Succeeded)
                         return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                 }
 
                 if (rolesToAdd.Any())
                 {
-                    result = await userManager.AddToRolesAsync(user, rolesToAdd);
+                    result = await userManager.AddToRolesAsync(user as ApplicationUser, rolesToAdd);
                     if (!result.Succeeded)
                         return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                 }
