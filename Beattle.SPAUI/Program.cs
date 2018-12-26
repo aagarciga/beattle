@@ -12,19 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
 using System.Net;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Serilog.Events;
-using Serilog.Core;
-using Serilog;
 using Serilog.Sinks.Email;
 
 namespace Beattle.SPAUI
@@ -52,7 +39,7 @@ namespace Beattle.SPAUI
                 new EmailConnectionInfo
                 {
                     FromEmail = smtpSettings["EmailAddress"],
-                    ToEmail = "aagarciga@gmail.com",
+                    ToEmail = smtpSettings["AdministratorEmailAddress"],                    
                     MailServer = smtpSettings["Host"],
                     NetworkCredentials = new NetworkCredential
                     {
@@ -61,11 +48,11 @@ namespace Beattle.SPAUI
                     },
                     EnableSsl = true,
                     Port = int.Parse(smtpSettings["Port"]),
-                    EmailSubject = "Beattle Logging"
+                    EmailSubject = smtpSettings["Subject"]
                 },
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}",
                 batchPostingLimit: 10
-                , restrictedToMinimumLevel: LogEventLevel.Information
+                , restrictedToMinimumLevel: LogEventLevel.Error
                 )
                .CreateLogger();
 
