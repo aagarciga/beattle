@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\user-login.model.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Beattle.Infrastructure\Beattle.Infrastructure.csproj" />
     <ProjectReference Include="..\Beattle.Persistence.PostgreSQL\Beattle.Persistence.PostgreSQL.csproj" />
   </ItemGroup>
@@ -41,6 +45,10 @@
     <Folder Include="ClientApp\src\app\modules\" />
     <Folder Include="ClientApp\src\app\services\" />
     <Folder Include="Logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\user-login.model.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

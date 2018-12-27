@@ -9,6 +9,7 @@ import { NavMenuComponent } from './components/example/nav-menu/nav-menu.compone
 import { HomeComponent } from './components/example/home/home.component';
 import { CounterComponent } from './components/example/counter/counter.component';
 import { FetchDataComponent } from './components/example/fetch-data/fetch-data.component';
+import { LoginComponent } from './components/feature/security/login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FetchDataComponent } from './components/example/fetch-data/fetch-data.c
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    LoginComponent
   ],
   imports: [
     // Add .withServerTransition() to support Universal rendering.
