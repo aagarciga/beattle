@@ -5,10 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NavMenuComponent } from './components/example/nav-menu/nav-menu.component';
+import { HomeComponent } from './components/example/home/home.component';
+import { CounterComponent } from './components/example/counter/counter.component';
+import { FetchDataComponent } from './components/example/fetch-data/fetch-data.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +19,9 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FetchDataComponent
   ],
   imports: [
+    // Add .withServerTransition() to support Universal rendering.
+    // The application ID can be any identifier which is unique on
+    // the page.
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
