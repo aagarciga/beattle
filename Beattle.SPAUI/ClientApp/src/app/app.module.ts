@@ -10,6 +10,7 @@ import { HomeComponent } from './components/example/home/home.component';
 import { CounterComponent } from './components/example/counter/counter.component';
 import { FetchDataComponent } from './components/example/fetch-data/fetch-data.component';
 import { LoginComponent } from './components/feature/security/login/login.component';
+import { AppRoutingModule } from './modules/app-routing/app-routing.module';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,7 @@ import { LoginComponent } from './components/feature/security/login/login.compon
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

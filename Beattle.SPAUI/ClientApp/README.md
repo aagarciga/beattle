@@ -29,3 +29,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Commands History
 ng g c components/feature/security/login --module app
+ng g enum enums/MessageSeverity
+ng g module modules/app-routing

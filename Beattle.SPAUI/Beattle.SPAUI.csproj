@@ -43,6 +43,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\components\feature\security\" />
     <Folder Include="ClientApp\src\app\modules\" />
+    <Folder Include="ClientApp\src\app\enums\" />
     <Folder Include="ClientApp\src\app\services\" />
     <Folder Include="Logs\" />
   </ItemGroup>
