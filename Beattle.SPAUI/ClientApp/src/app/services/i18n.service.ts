@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, of } from 'rxjs';
 import { TranslateService, TranslateLoader } from '@ngx-translate/core';
 import { browser } from 'protractor';
-import { setTimeout } from 'timers';
+
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,10 @@ export class I18nService {
       setTimeout(() => {
         this.translateService.use(language);
         this.onLanguageChange.next(language);
-      }, 1000);
+      });
     }
+
+    return language;
   }
 
   useBrowserLanguage(): string | void {
