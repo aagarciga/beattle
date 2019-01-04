@@ -31,3 +31,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ng g c components/feature/security/login --module app
 ng g enum enums/MessageSeverity
 ng g module modules/app-routing
+ng g service services/authorization = auth
+ng g service services/configuration
+ng g service services/i18n = translation
