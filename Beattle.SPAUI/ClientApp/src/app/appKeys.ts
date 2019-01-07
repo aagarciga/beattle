@@ -15,5 +15,8 @@ export class AppKeys {
   public static readonly USER_SETTINGS_SHOW_DASHBOARD_TODO = "user_settings_show_dashboad_todo";
   public static readonly USER_SETTINGS_SHOW_DASHBOARD_BANNER = "user_settings_show_dashboad_banner";
 
-
+  public static readonly TOKEN_ID = "token_id";
+  public static readonly TOKEN_ACCESS = "token_access";
+  public static readonly TOKEN_REFRESH = "token_refresh";
+  public static readonly TOKEN_EXPIRES_IN = "expires_in";
 }
