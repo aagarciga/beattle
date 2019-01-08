@@ -32,7 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\common\application-types.ts" />
+    <None Remove="ClientApp\src\app\common\helpers\jwt.helper.ts" />
+    <None Remove="ClientApp\src\app\common\interfaces\login-response.ts" />
+    <None Remove="ClientApp\src\app\common\interfaces\token-id.ts" />
     <None Remove="ClientApp\src\app\models\user-login.model.ts" />
+    <None Remove="ClientApp\src\app\models\user.model.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +54,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\common\application-types.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\helpers\jwt.helper.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\interfaces\login-response.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\interfaces\token-id.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user-login.model.ts" />
   </ItemGroup>
 

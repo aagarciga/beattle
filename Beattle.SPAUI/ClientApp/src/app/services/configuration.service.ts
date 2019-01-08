@@ -3,7 +3,7 @@ import { AppUtilities } from '../appUtilities';
 import { environment } from 'src/environments/environment';
 import { LocalStoreManagerService } from './local-store-manager.service';
 import { I18nService } from './i18n.service';
-import { AppKeys } from '../appKeys';
+import { AppKeys } from '../common/application-keys';
 
 type UserSettings = {
   language: string,
