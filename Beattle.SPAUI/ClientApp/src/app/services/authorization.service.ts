@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ConfigurationService } from './configuration.service';
 import { Router, NavigationExtras } from '@angular/router';
-import { EndpointFactoryService } from './endpoint-factory.service';
+import { EndPointFactoryService } from './endpoints/endpoint-factory.service';
 import { LocalStoreManagerService } from './local-store-manager.service';
 import { Observable, Subject } from 'rxjs';
 import { AppKeys } from '../common/application-keys';
@@ -27,7 +27,7 @@ export class AuthorizationService {
   constructor(
     private router: Router,
     private settings: ConfigurationService,
-    private endPointFactory: EndpointFactoryService,
+    private endPointFactory: EndPointFactoryService,
     private localStoreManager: LocalStoreManagerService
   ) {
     // Initializing Login Status

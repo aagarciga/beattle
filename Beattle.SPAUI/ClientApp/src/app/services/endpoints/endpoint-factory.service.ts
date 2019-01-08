@@ -1,14 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ConfigurationService } from './configuration.service';
+import { ConfigurationService } from '../configuration.service';
 import { Subject, Observable, throwError } from 'rxjs';
 import { mergeMap, switchMap, catchError } from 'rxjs/operators';
-import { AuthorizationService } from './authorization.service';
+import { AuthorizationService } from '../authorization.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EndpointFactoryService {
+export class EndPointFactoryService {
 
   static readonly apiVersion: string = "1";
 
@@ -22,7 +22,7 @@ export class EndpointFactoryService {
   private readonly _httpHeaderContentType: string = 'application/x-www-form-urlencoded';
   private readonly _loginUrl: string = "/connect/token";
   private get loginUrl() {
-    return this.settings.baseUrl + this.loginUrl;
+    return this.settings.baseUrl + this._loginUrl;
   }
   private taskPauser: Subject<any>;
   private isRefreshingLogin: boolean;
@@ -64,7 +64,7 @@ export class EndpointFactoryService {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer ' + this.authorizationService.accessToken,
       'Content-Type': 'application/json',
-      'Accept': `application/vnd.iman.v${EndpointFactoryService.apiVersion}+json, application/json, text/plain, */*`,
+      'Accept': `application/vnd.iman.v${EndPointFactoryService.apiVersion}+json, application/json, text/plain, */*`,
       'App-Version': ConfigurationService.appVersion
     });
 
