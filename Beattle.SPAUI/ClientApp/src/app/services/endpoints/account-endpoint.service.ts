@@ -17,7 +17,7 @@ export class AccountEndPointService extends EndPointFactoryService {
   private readonly _unblockUserUrl: string = "/api/account/users/unblock";
   private readonly _rolesUrl: string = "/api/account/roles";
   private readonly _roleByRoleNameUrl: string = "/api/account/roles/name";
-  private readonly _permissionsUrl: string = "/api/account/permissions";
+  private readonly _authorizationsUrl: string = "/api/account/authorizations";
 
   get usersUrl() { return this.settings.baseUrl + this._usersUrl; }
   get userByUserNameUrl() { return this.settings.baseUrl + this._userByUserNameUrl; }
@@ -26,7 +26,7 @@ export class AccountEndPointService extends EndPointFactoryService {
   get unblockUserUrl() { return this.settings.baseUrl + this._unblockUserUrl; }
   get rolesUrl() { return this.settings.baseUrl + this._rolesUrl; }
   get roleByRoleNameUrl() { return this.settings.baseUrl + this._roleByRoleNameUrl; }
-  get permissionsUrl() { return this.settings.baseUrl + this._permissionsUrl; }
+  get authorizationsUrl() { return this.settings.baseUrl + this._authorizationsUrl; }
 
   constructor(
     httpClient: HttpClient,
@@ -171,7 +171,7 @@ export class AccountEndPointService extends EndPointFactoryService {
   }
 
   getPermissionsEndPoint<T>(): Observable<T> {
-    return this.httpClient.get<T>(this.permissionsUrl, this.getRequestHeaders()).pipe<T>(
+    return this.httpClient.get<T>(this.authorizationsUrl, this.getRequestHeaders()).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getPermissionsEndPoint());
       }));

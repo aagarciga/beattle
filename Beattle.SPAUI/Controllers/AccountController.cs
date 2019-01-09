@@ -469,12 +469,11 @@ namespace Beattle.SPAUI.Controllers
             return Ok(roleViewModel);
         }
 
-        [HttpGet("permissions")]
+        [HttpGet("authorizations")]
         [Authorize(Policies.ViewRoles)]
         [ProducesResponseType(200, Type = typeof(List<AuthorizationViewModel>))]
         public IActionResult GetAllAuthorizations()
         {
-            //TODO: Change permissions for authorizations
             return Ok(Mapper.Map<List<AuthorizationViewModel>>(AuthorizationManager.Authorizations));
         }
 
