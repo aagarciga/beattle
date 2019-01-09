@@ -18,7 +18,9 @@ export class LoginComponent implements OnInit {
   @Input()
   isModal = false;
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit() {
   }

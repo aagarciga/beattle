@@ -4,11 +4,14 @@ import { Component, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/co
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  //encapsulation: ViewEncapsulation.None // Use only on development
+  encapsulation: ViewEncapsulation.None // Use only on development
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
   isAppLoaded: boolean;
+  isUserLoggedIn: boolean;
+  shouldShowLoginModal: boolean;
+  removePrebootScreen: boolean;
   title = 'Beattle';
 
   ngAfterViewInit(): void {
