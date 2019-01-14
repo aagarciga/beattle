@@ -170,10 +170,10 @@ export class AccountEndPointService extends EndPointFactoryService {
       }));
   }
 
-  getPermissionsEndPoint<T>(): Observable<T> {
+  getAuthorizationsEndPoint<T>(): Observable<T> {
     return this.httpClient.get<T>(this.authorizationsUrl, this.getRequestHeaders()).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.getPermissionsEndPoint());
+        return this.handleError(error, () => this.getAuthorizationsEndPoint());
       }));
   }
 }

@@ -37,8 +37,12 @@
     <None Remove="ClientApp\src\app\common\helpers\jwt.helper.ts" />
     <None Remove="ClientApp\src\app\common\interfaces\login-response.ts" />
     <None Remove="ClientApp\src\app\common\interfaces\token-id.ts" />
+    <None Remove="ClientApp\src\app\models\authorization.model.ts" />
+    <None Remove="ClientApp\src\app\models\notification.model.ts" />
+    <None Remove="ClientApp\src\app\models\role.model.ts" />
     <None Remove="ClientApp\src\app\models\user-login.model.ts" />
     <None Remove="ClientApp\src\app\models\user.model.ts" />
+    <None Remove="ClientApp\src\app\models\userUpdate.model.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,8 +63,12 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\helpers\jwt.helper.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\interfaces\login-response.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\interfaces\token-id.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\authorization.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\notification.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\role.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user-login.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\userUpdate.model.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
