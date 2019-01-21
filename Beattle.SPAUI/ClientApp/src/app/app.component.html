@@ -1,6 +1,7 @@
-<body>
-  <app-nav-menu></app-nav-menu>
+<section id="application-container" class="{{settings.theme | lowercase}}-theme">
+  <ngx-toasta></ngx-toasta>
+  <app-nav-menu [applicationName]="title" [isUserLoggedIn]="isUserLoggedIn"></app-nav-menu>
   <div class="container">
     <router-outlet></router-outlet>
   </div>
-</body>
+</section>

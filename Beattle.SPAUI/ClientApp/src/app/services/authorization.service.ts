@@ -7,7 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import { AppKeys } from '../common/application-keys';
 import { AppUtilities } from '../appUtilities';
 import { UserModel } from '../models/user.model';
-import { PermissionValues } from '../common/application-types';
+import { AuthorizationValue } from '../common/application-types';
 import { LoginResponse } from '../common/interfaces/login-response';
 import { map } from 'rxjs/operators';
 import { JwtHelper } from '../common/helpers/jwt.helper';
@@ -48,8 +48,8 @@ export class AuthorizationService {
     this.checkLoginStatus(user);
     return user;
   }
-  get userPermissions(): PermissionValues[] {
-    return this.localStoreManager.getDataObject<PermissionValues[]>(AppKeys.USER_PERMISSIONS) || [];
+  get userAuthorizations(): AuthorizationValue[] {
+    return this.localStoreManager.getDataObject<AuthorizationValue[]>(AppKeys.USER_AUTHORIZATIONS) || [];
   }
   get accessToken(): string {
 
@@ -159,7 +159,7 @@ export class AuthorizationService {
     this.localStoreManager.deleteData(AppKeys.TOKEN_ID);
     this.localStoreManager.deleteData(AppKeys.TOKEN_REFRESH);
     this.localStoreManager.deleteData(AppKeys.TOKEN_EXPIRES_IN);
-    this.localStoreManager.deleteData(AppKeys.USER_PERMISSIONS);
+    this.localStoreManager.deleteData(AppKeys.USER_AUTHORIZATIONS);
     this.localStoreManager.deleteData(AppKeys.CURRENT_USER);
 
     this.settings.clearLocalChanges();
@@ -209,7 +209,7 @@ export class AuthorizationService {
     let jwtHelper = new JwtHelper();
     let decodedIdToken = <TokenId>jwtHelper.decode(response.tokenId);
 
-    let permissions: PermissionValues[] = Array.isArray(decodedIdToken.permission) ? decodedIdToken.permission : [decodedIdToken.permission];
+    let authorizations: AuthorizationValue[] = Array.isArray(decodedIdToken.authorizations) ? decodedIdToken.authorizations : [decodedIdToken.authorizations];
 
     if (!this.isLoggedIn)
       this.settings.import(decodedIdToken.settings);
@@ -223,26 +223,26 @@ export class AuthorizationService {
       Array.isArray(decodedIdToken.role) ? decodedIdToken.role : [decodedIdToken.role]);
     user.isEnabled = true;
 
-    this.saveUserDetails(user, permissions, accessToken, idToken, refreshToken, accessTokenExpiry, rememberMe);
+    this.saveUserDetails(user, authorizations, accessToken, idToken, refreshToken, accessTokenExpiry, rememberMe);
 
     this.checkLoginStatus(user);
 
     return user;
   }
 
-  /**
-   * 
-   * @param user
-   * @param permissions
-   * @param tokenAccess
-   * @param tokenId
-   * @param tokenRefresh
-   * @param tokenExpiresIn
-   * @param rememberMe
-   */
+/**
+ * 
+ * @param user
+ * @param authorizations
+ * @param tokenAccess
+ * @param tokenId
+ * @param tokenRefresh
+ * @param tokenExpiresIn
+ * @param rememberMe
+ */
   private saveUserDetails(
     user: UserModel,
-    permissions: PermissionValues[],
+    authorizations: AuthorizationValue[],
     tokenAccess: string,
     tokenId: string,
     tokenRefresh: string,
@@ -254,7 +254,7 @@ export class AuthorizationService {
       this.localStoreManager.savePermanentData(tokenId, AppKeys.TOKEN_ID);
       this.localStoreManager.savePermanentData(tokenRefresh, AppKeys.TOKEN_REFRESH);
       this.localStoreManager.savePermanentData(tokenExpiresIn, AppKeys.TOKEN_EXPIRES_IN);
-      this.localStoreManager.savePermanentData(permissions, AppKeys.USER_PERMISSIONS);
+      this.localStoreManager.savePermanentData(authorizations, AppKeys.USER_AUTHORIZATIONS);
       this.localStoreManager.savePermanentData(user, AppKeys.CURRENT_USER);
     }
     else {
@@ -262,7 +262,7 @@ export class AuthorizationService {
       this.localStoreManager.saveSyncedSessionData(tokenId, AppKeys.TOKEN_ID);
       this.localStoreManager.saveSyncedSessionData(tokenRefresh, AppKeys.TOKEN_REFRESH);
       this.localStoreManager.saveSyncedSessionData(tokenExpiresIn, AppKeys.TOKEN_EXPIRES_IN);
-      this.localStoreManager.saveSyncedSessionData(permissions, AppKeys.USER_PERMISSIONS);
+      this.localStoreManager.saveSyncedSessionData(authorizations, AppKeys.USER_AUTHORIZATIONS);
       this.localStoreManager.saveSyncedSessionData(user, AppKeys.CURRENT_USER);
     }
 

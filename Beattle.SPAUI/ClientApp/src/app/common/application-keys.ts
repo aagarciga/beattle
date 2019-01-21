@@ -21,6 +21,6 @@ export class AppKeys {
   public static readonly TOKEN_EXPIRES_IN = "expires_in";
 
   public static readonly CURRENT_USER = "current_user";
-  public static readonly USER_PERMISSIONS = "user_permissions";
+  public static readonly USER_AUTHORIZATIONS = "user_authorizations";
   public static readonly REMEMBER_ME = "remember_me";
 }

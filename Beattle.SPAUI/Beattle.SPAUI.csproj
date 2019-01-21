@@ -32,6 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\app-error.handler.ts" />
     <None Remove="ClientApp\src\app\common\alerts.ts" />
     <None Remove="ClientApp\src\app\common\application-types.ts" />
     <None Remove="ClientApp\src\app\common\helpers\jwt.helper.ts" />
@@ -58,6 +63,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\app-error.handler.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\alerts.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\application-types.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\helpers\jwt.helper.ts" />

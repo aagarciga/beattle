@@ -1,4 +1,4 @@
-import { PermissionValues } from "../application-types";
+import { AuthorizationValue } from "../application-types";
 
 export interface TokenId {
   sub: string;
@@ -7,6 +7,6 @@ export interface TokenId {
   email: string;
   phone: string;
   role: string | string[];
-  permission: PermissionValues | PermissionValues[];
+  authorizations: AuthorizationValue | AuthorizationValue[];
   settings: string;
 }

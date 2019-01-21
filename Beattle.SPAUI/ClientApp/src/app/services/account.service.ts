@@ -28,7 +28,7 @@ export class AccountService {
   private _changeEvent = new Subject<ChangeEventArg>();
 
   get authorizations(): AuthorizationValue[] {
-    return this.authorizationService.userPermissions;
+    return this.authorizationService.userAuthorizations;
   }
 
   get currentUser() {

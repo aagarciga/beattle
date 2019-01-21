@@ -25,6 +25,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-toasta/styles/style-bootstrap.css",
               "src/styles.css"
             ],
             "scripts": []
